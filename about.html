@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | Sweet Bean Café</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* ✨ Added alignment styles just for About page */
+    .about-section {
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .about-images img {
+      border-radius: 20px;
+      max-width: 90%;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      margin: 20px auto;
+      display: block;
+    }
+
+    .booking-steps {
+      background-color: #fff7f0;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      text-align: center;
+      margin-top: 50px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .booking-steps h3 {
+      color: #a45c38;
+      font-size: 1.6em;
+      margin-bottom: 20px;
+      font-family: 'Pacifico', cursive;
+    }
+
+    .booking-steps p {
+      font-size: 1.1em;
+      color: #444;
+      margin: 10px 0;
+    }
+
+    .booking-steps .btn {
+      background-color: #a45c38;
+      color: white;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 25px;
+      font-size: 1em;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .booking-steps .btn:hover {
+      background-color: #8b4b2d;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Sweet Bean Café</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="about.html" class="active">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="about-section">
+    <h2>About Sweet Bean Café</h2>
+    <p>
+      Welcome to <strong>Sweet Bean Café</strong> — your cozy neighborhood spot for handcrafted coffee, freshly baked treats, and warm smiles.
+      We began with one dream — to create a space where friends gather, stories brew, and every sip feels like home.
+    </p>
+    <p>
+      Our beans are locally sourced, our pastries baked with love, and our team serves happiness with every cup. Whether you’re here for a latte break,
+      a sweet indulgence, or just a moment to unwind, Sweet Bean Café is your happy place.
+    </p>
+
+    <!-- ✅ Your Image Section Added Here -->
+    <div class="about-images">
+      <img src="https://www.shutterstock.com/image-photo/interior-scene-dark-cafe-600nw-2563117471.jpg" alt="Cafe Image 1">
+      <img src="https://as2.ftcdn.net/jpg/05/93/92/07/1000_F_593920730_0OzjdRJ24X8QSjIQdqbQNCylhXXPRagQ.jpg" alt="Cafe Image 2">
+      <img src="https://media.istockphoto.com/id/2157400287/photo/coffee-drink-and-old-on-wooden-desk.jpg?s=612x612&w=0&k=20&c=MnqFFBE0qc5oiDLAmQfkpwSjpRQX-Sqg-JofRRWdXGo=" alt="Cafe Image 3">
+    </div>
+    <!-- End Image Section -->
+
+    <!-- ☕ Booking Steps Section -->
+    <div class="booking-steps">
+      <h3>Just 3 Steps Away from Your Perfect Café Moment ☕</h3>
+      <p>✨ 1. Explore our menu and choose your favorite combo.</p>
+      <p>✨ 2. Click <strong>“Book a Table”</strong> or <strong>“Order Now”</strong>.</p>
+      <p>✨ 3. Sit back, relax, and let us make your day better!</p>
+      <button class="btn" onclick="window.location.href='index.html#booking'">Book Now</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Sweet Bean Café | Made with ☕ & ❤️</p>
+  </footer>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

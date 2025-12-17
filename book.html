@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Table — Sweet Bean Café</title>
+
+  <!-- Correct path to CSS -->
+  <link rel="stylesheet" href="assets/style.css" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>Sweet Bean Café</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <!-- 🍰 Table Booking Section -->
+  <section class="section" id="tables">
+    <h3>Select Your Table 🍰</h3>
+    <p>Choose your cozy spot and confirm your booking below 💕</p>
+
+    <div class="table-grid">
+      <div class="table" data-table="1">1</div>
+      <div class="table" data-table="2">2</div>
+      <div class="table" data-table="3">3</div>
+      <div class="table" data-table="4">4</div>
+      <div class="table" data-table="5">5</div>
+      <div class="table" data-table="6">6</div>
+    </div>
+
+    <button class="btn" id="bookNowBtn" disabled>Book Now</button>
+  </section>
+
+  <!-- ☕ Hidden Popup Form -->
+  <div id="popupForm" class="popup hidden">
+    <div class="popup-content">
+      <h3>Reserve Your Table ☕</h3>
+      <form id="reservationForm">
+
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="tel" id="phone" placeholder="Phone Number" required>
+        <input type="date" id="date" required>
+
+        <!-- ✅ NEWLY ADDED FIELD (Number of People) -->
+        <input type="number" id="people" placeholder="Number of People" min="1" max="20" required>
+
+        <div class="time-input">
+          <input type="time" id="time" required>
+          <select id="ampm" required>
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+        </div>
+
+        <div class="popup-buttons">
+          <button type="submit" class="btn">Confirm Booking</button>
+          <button type="button" class="btn cancel" onclick="closePopup()">Cancel</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Sweet Bean Café | Made with ☕ & ❤️</p>
+    <div class="footer-content">
+      <p><strong>Opening Hours:</strong> Mon–Fri: 8 AM – 9 PM | Sat–Sun: 9 AM – 11 PM</p>
+    </div>
+  </footer>
+
+  <!-- 📜 Correct script path -->
+  <script src="assets/script.js"></script>
+</body>
+</html>

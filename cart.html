@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Cart | Sweet Bean Café</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>Sweet Bean Café</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="book.html">Book a Table</a>
+      <a href="cart.html" class="active">Cart</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="section">
+  <h3>Your Cart</h3>
+  <div id="cart-items"></div>
+  <h3 id="cart-total"></h3>
+  <button class="btn" id="checkout-btn">Proceed to Checkout</button>
+</section>
+
+  <footer>
+    <p>© 2025 Sweet Bean Café | Made with ☕ & ❤️</p>
+  </footer>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const cartContainer = document.getElementById("cart-items");
+    const cartTotal = document.getElementById("cart-total");
+    const checkoutBtn = document.getElementById("checkout-btn");
+
+    function renderCart() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cartContainer.innerHTML = "";
+      let total = 0;
+
+      if (cart.length === 0) {
+        cartContainer.innerHTML = "<p>Your cart is empty ☕</p>";
+        cartTotal.textContent = "";
+        checkoutBtn.style.display = "none";
+        return;
+      }
+
+      checkoutBtn.style.display = "inline-block";
+
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        const itemDiv = document.createElement("div");
+        itemDiv.classList.add("cart-item");
+        itemDiv.innerHTML = `
+          <div>
+            <h4>${item.name}</h4>
+            <p>₹${item.price} × 
+              <input type="number" min="1" value="${item.quantity}" data-index="${index}">
+            </p>
+          </div>
+          <button class="remove-btn" data-index="${index}">Remove</button>
+        `;
+        cartContainer.appendChild(itemDiv);
+      });
+
+      cartTotal.textContent = "Total: ₹" + total.toFixed(2);
+      attachCartEvents();
+    }
+
+    function attachCartEvents() {
+      document.querySelectorAll(".remove-btn").forEach(btn => {
+        btn.addEventListener("click", e => {
+          const index = e.target.dataset.index;
+          let cart = JSON.parse(localStorage.getItem("cart")) || [];
+          cart.splice(index, 1);
+          localStorage.setItem("cart", JSON.stringify(cart));
+          renderCart();
+        });
+      });
+
+      document.querySelectorAll('input[type="number"]').forEach(input => {
+        input.addEventListener("change", e => {
+          const index = e.target.dataset.index;
+          let cart = JSON.parse(localStorage.getItem("cart")) || [];
+          const newQty = parseInt(e.target.value);
+          if (newQty <= 0) return;
+          cart[index].quantity = newQty;
+          localStorage.setItem("cart", JSON.stringify(cart));
+          renderCart();
+        });
+      });
+    }
+
+    checkoutBtn.addEventListener("click", () => {
+      alert("Thank you for your order! ☕");
+      localStorage.removeItem("cart");
+      renderCart();
+    });
+
+    renderCart();
+  });
+</script>
+
+
+
+</body>
+</html>
