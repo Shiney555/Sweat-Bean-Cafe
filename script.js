@@ -112,3 +112,39 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initial badge load
   updateBadge();
 });
+// ========================== 🪑 TABLE BOOKING ==========================
+const tables = document.querySelectorAll(".table");
+const bookNowBtn = document.getElementById("bookNowBtn");
+const popupForm = document.getElementById("popupForm");
+const reservationForm = document.getElementById("reservationForm");
+
+let selectedTable = null;
+
+if (tables.length && bookNowBtn) {
+    tables.forEach(table => {
+        table.addEventListener("click", () => {
+            // 1. Highlight the table
+            tables.forEach(t => t.classList.remove("selected"));
+            table.classList.add("selected");
+            
+            // 2. Save table number
+            selectedTable = table.dataset.table;
+            console.log("Table selected:", selectedTable); // Debug check
+
+            // 3. Enable the button
+            bookNowBtn.disabled = false;
+            bookNowBtn.textContent = `Book Table ${selectedTable}`;
+        });
+    });
+
+    // 4. Open the form when button is clicked
+    bookNowBtn.addEventListener("click", () => {
+        if (selectedTable && popupForm) {
+            popupForm.style.display = "flex"; // Forces the popup to show
+            popupForm.classList.remove("hidden");
+        } else {
+            alert("Please select a table first! 🍰");
+        }
+    });
+}
+
