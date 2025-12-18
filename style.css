@@ -685,6 +685,60 @@ nav a {
     border: 2px solid #5c2e1f;
 }
 
+/* ... Existing Styles ... */
+
+/* Ensure the popup handles display correctly */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex; /* Script will toggle visibility */
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(5px);
+}
+
+.popup.hidden {
+  display: none !important;
+}
+
+/* Clear selection styling */
+.table.selected {
+  background-color: var(--accent) !important;
+  color: white !important;
+  border: 2px solid var(--cafe-brown);
+  transform: scale(1.1);
+}
+
+/* Button behavior */
+.btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.time-input {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.time-input input {
+  flex: 2;
+}
+
+.time-input select {
+  flex: 1;
+  margin: 0.5rem 0;
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
 
 
 
