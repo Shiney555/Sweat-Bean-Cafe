@@ -20,52 +20,54 @@ document.addEventListener("DOMContentLoaded", () => {
                 // 2. Save table number
                 selectedTable = table.dataset.table;
                 
-                // 3. Enable the button and update text
+                // 3. Enable the button
                 bookNowBtn.disabled = false;
                 bookNowBtn.textContent = `Book Table ${selectedTable}`;
             });
         });
 
-        // 4. Open the form when button is clicked
+        // 4. Open the form
         bookNowBtn.addEventListener("click", () => {
-            if (selectedTable) {
+            if (selectedTable && popupForm) {
                 popupForm.classList.remove("hidden");
-                // Ensure display is block/flex if CSS hidden uses display:none
-                popupForm.style.display = "flex"; 
             } else {
-                showToast("Please select a table first 🍰", "#e74c3c");
+                showToast("Please select a table first! 🍰", "#e74c3c");
             }
         });
-
-        // 5. Global function to close popup
-        window.closePopup = function () {
-            popupForm.classList.add("hidden");
-            popupForm.style.display = "none";
-            reservationForm.reset();
-        };
-
-        // 6. Handle Form Submission
-        if (reservationForm) {
-            reservationForm.addEventListener("submit", (e) => {
-                e.preventDefault();
-                const bookingData = {
-                    venue: "Sweet Bean Café",
-                    table: selectedTable,
-                    name: document.getElementById("name").value.trim(),
-                    phone: document.getElementById("phone").value.trim(),
-                    date: document.getElementById("date").value,
-                    time: document.getElementById("time").value + " " + document.getElementById("ampm").value,
-                    people: document.getElementById("people").value
-                };
-
-                localStorage.setItem("tableBooking", JSON.stringify(bookingData));
-                window.location.href = "booking-details.html";
-            });
-        }
     }
 
-    // ========================== 🛒 CART LOGIC ==========================
-    // ... (Keep your existing updateBadge, showToast, and Menu Item listeners here)
+    // 5. Close popup function (assigned to window so HTML can see it)
+    window.closePopup = function () {
+        if (popupForm) {
+            popupForm.classList.add("hidden");
+            reservationForm.reset();
+        }
+    };
+
+    // 6. Handle Reservation Form Submission
+    if (reservationForm) {
+        reservationForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const bookingData = {
+                venue: "Sweet Bean Café",
+                table: selectedTable,
+                name: document.getElementById("name").value.trim(),
+                phone: document.getElementById("phone").value.trim(),
+                date: document.getElementById("date").value,
+                people: document.getElementById("people").value,
+                time: document.getElementById("time").value + " " + document.getElementById("ampm").value
+            };
+
+            localStorage.setItem("tableBooking", JSON.stringify(bookingData));
+            showToast("Booking Successful! Redirecting...", "#2ecc71");
+            
+            setTimeout(() => {
+                window.location.href = "booking-details.html";
+            }, 1000);
+        });
+    }
+
+    // ========================== 🛒 CART UTILITIES ==========================
     function updateBadge() {
         const cartLink = document.querySelector('a[href="cart.html"]');
         if (!cartLink) return;
@@ -86,89 +88,38 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function showToast(message, color = "#f7b267") {
-        const popup = document.createElement("div");
-        popup.textContent = message;
-        popup.style.cssText = `position: fixed; top: 20px; right: 20px; background: ${color}; color: white; padding: 12px 18px; border-radius: 25px; font-weight: bold; z-index: 9999;`;
-        document.body.appendChild(popup);
-        setTimeout(() => popup.remove(), 2500);
+        const toast = document.createElement("div");
+        toast.textContent = message;
+        toast.style.cssText = `
+            position: fixed; top: 20px; right: 20px;
+            background: ${color}; color: white; padding: 12px 18px;
+            border-radius: 25px; font-weight: bold; z-index: 9999;
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2500);
     }
 
-    updateBadge();
-});
+    // ========================== 🍔 MENU ADD-TO-CART ==========================
+    document.querySelectorAll(".menu-item button").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const name = btn.dataset.name;
+            const price = Number(btn.dataset.price);
 
-  function showToast(message, color = "#f7b267") {
-    const popup = document.createElement("div");
-    popup.textContent = message;
-    popup.style.cssText = `
-      position: fixed; top: 20px; right: 20px;
-      background: ${color}; color: white; padding: 12px 18px;
-      border-radius: 25px; font-weight: bold; z-index: 9999;
-    `;
-    document.body.appendChild(popup);
-    setTimeout(() => popup.remove(), 2500);
-  }
+            if (!name || isNaN(price)) return;
 
-  // Add to Cart Click Handler
-  document.querySelectorAll(".menu-item button").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const name = btn.dataset.name;
-      const price = Number(btn.dataset.price);
+            const existing = cart.find(item => item.name === name);
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({ name, price, quantity: 1 });
+            }
 
-      if (!name || isNaN(price)) {
-        console.error("Missing data attributes on button!");
-        return;
-      }
-
-      const existing = cart.find(item => item.name === name);
-      if (existing) {
-        existing.quantity++;
-      } else {
-        cart.push({ name, price, quantity: 1 });
-      }
-
-      localStorage.setItem("cart", JSON.stringify(cart));
-      updateBadge();
-      showToast(`✅ ${name} added to cart`);
-    });
-  });
-
-  // Initial badge load
-  updateBadge();
-});
-// ========================== 🪑 TABLE BOOKING ==========================
-const tables = document.querySelectorAll(".table");
-const bookNowBtn = document.getElementById("bookNowBtn");
-const popupForm = document.getElementById("popupForm");
-const reservationForm = document.getElementById("reservationForm");
-
-let selectedTable = null;
-
-if (tables.length && bookNowBtn) {
-    tables.forEach(table => {
-        table.addEventListener("click", () => {
-            // 1. Highlight the table
-            tables.forEach(t => t.classList.remove("selected"));
-            table.classList.add("selected");
-            
-            // 2. Save table number
-            selectedTable = table.dataset.table;
-            console.log("Table selected:", selectedTable); // Debug check
-
-            // 3. Enable the button
-            bookNowBtn.disabled = false;
-            bookNowBtn.textContent = `Book Table ${selectedTable}`;
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateBadge();
+            showToast(`✅ ${name} added to cart`);
         });
     });
 
-    // 4. Open the form when button is clicked
-    bookNowBtn.addEventListener("click", () => {
-        if (selectedTable && popupForm) {
-            popupForm.style.display = "flex"; // Forces the popup to show
-            popupForm.classList.remove("hidden");
-        } else {
-            alert("Please select a table first! 🍰");
-        }
-    });
-}
-
-
+    // Initial load
+    updateBadge();
+});
