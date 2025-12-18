@@ -673,6 +673,15 @@ nav a {
 .menu-item button:hover {
   background: #e89b45;
 }
+.hidden {
+    display: none !important;
+}
+
+.table.selected {
+    background-color: #f7b267 !important; /* Changes color when clicked */
+    border: 2px solid #5c2e1f;
+}
+
 
 
 
